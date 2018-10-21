@@ -178,6 +178,72 @@ function usual(&$out) {
 */
  function install($data='') {
   parent::install();
+
+
+ 
+	 
+$code='
+$this->sendAction($chat_id);
+$option[] = $this->buildInlineKeyboardButton($text="Анекдот","","Callback_say_SayJokes1",""); 
+$option[] = $this->buildInlineKeyboardButton($text="Рассказ","","Callback_say_SayJokes2",""); 
+$option[] = $this->buildInlineKeyboardButton($text="Афоризм","","Callback_say_SayJokes4",""); 
+$option[] = $this->buildInlineKeyboardButton($text="Цитату","","Callback_say_SayJokes5",""); 
+$option[] = $this->buildInlineKeyboardButton($text="Статусы","","Callback_say_SayJokes8",""); 
+$option[] = $this->buildInlineKeyboardButton($text="Тост","","Callback_say_SayJokes6",""); 
+$option[] = $this->buildInlineKeyboardButton($text="Поздравления","","Callback_say_SayJokes16",""); 
+
+$count_row = 3;
+$option = array_chunk($option, $count_row);
+$keyb = $this->buildInlineKeyBoard($option);
+$content = array("chat_id" => $chat_id, "text" => "Скажи:", "reply_markup" => $keyb, "parse_mode" => "HTML");
+$res = $this->sendContent($content);
+';
+	 
+$code1='
+if (substr($callback,13,8) == "SayJokes") { 
+include_once(DIR_MODULES . "sayjokes/sayjokes.class.php");
+$sj = new sayjokes();
+$sj->getjoke(substr($callback,21));   
+}
+';	 
+	 
+	 
+$rec=SQLSelect("SELECT *  FROM tlg_cmd  where TITLE='Ржунемогу'" );
+ 
+  if  (count($rec)==0 ){
+	  
+
+$rec=SQLSelectOne("SELECT max(ID)+1 id FROM tlg_cmd " );
+  $cmdid= $rec['id'];
+	  
+$par=array();		 
+$par['ID'] = $cmdid;
+$par['TITLE'] = 'Ржунемогу';		 		 
+$par['DESCRIPTION'] = 'Ветка модуля Ржунемогу';		 		 	 
+$par['ACCESS'] = 3;		 		 	 	 
+$par['SHOW_MODE'] = 1;		 		 	 	 	 
+$par['CONDITION'] = 1;		 		 	 	 	 
+$par['PRIORITY'] = 0;		 		 	 	 	 
+$par['CODE'] = $code;		 		 	 	 	 	 
+SQLInsert('tlg_cmd', $par);						
+
+	  
+$rec=SQLSelectOne("SELECT max(ID)+1 id FROM tlg_event" );
+  $eventid= $rec['id'];
+	 
+$par=array();		 
+$par['ID'] = $eventid;
+$par['TITLE'] = 'yw_callback';		 		 
+$par['DESCRIPTION'] = 'Ветка модуля Ржунемогу';		 		 	 
+$par['TYPE_EVENT'] = 9;		 		 	 	 
+$par['ENABLE'] = 1;		 		 	 	 	 
+$par['CODE'] = $code1;		 		 	 	 	 	 
+SQLInsert('tlg_event', $par);						
+	 
+	 
+}	
+
+
  }
  
  function dbInstall($data) {
