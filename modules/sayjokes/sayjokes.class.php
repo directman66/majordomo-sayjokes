@@ -233,7 +233,7 @@ $rec=SQLSelectOne("SELECT max(ID)+1 id FROM tlg_event" );
 	 
 $par=array();		 
 $par['ID'] = $eventid;
-$par['TITLE'] = 'yw_callback';		 		 
+$par['TITLE'] = 'sayjokes_callback';		 		 
 $par['DESCRIPTION'] = 'Ветка модуля Ржунемогу';		 		 	 
 $par['TYPE_EVENT'] = 9;		 		 	 	 
 $par['ENABLE'] = 1;		 		 	 	 	 
