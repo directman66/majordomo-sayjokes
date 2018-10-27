@@ -179,15 +179,13 @@ function usual(&$out) {
  function install($data='') {
   parent::install();
 
-
+/*
 $status = mysql_fetch_assoc(mysql_query("CHECK TABLE tlg_cmd")); 
 if (($status['Msg_type'] == 'error') && ($status['Msg_text'] == "Table 'base.tablename' doesn't exist")) { 
    $exists = 0; 
 }else{ 
    $exists = 1;
-
-
-	 
+*/	 
 	 
 $code='
 $this->sendAction($chat_id);
@@ -248,7 +246,7 @@ $par['CODE'] = $code1;
 SQLInsert('tlg_event', $par);						
 	 
 	 
-}	
+//}	
 
 }
  }
