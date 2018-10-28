@@ -179,14 +179,8 @@ function usual(&$out) {
  function install($data='') {
   parent::install();
 
-/*
-$status = mysql_fetch_assoc(mysql_query("CHECK TABLE tlg_cmd")); 
-if (($status['Msg_type'] == 'error') && ($status['Msg_text'] == "Table 'base.tablename' doesn't exist")) { 
-   $exists = 0; 
-}else{ 
-   $exists = 1;
-*/	 
-	 
+
+if (SQLSELECTONE("CHECK TABLE tlg_cmd")['Msg_text']=='OK') {	 
 $code='
 $this->sendAction($chat_id);
 $option[] = $this->buildInlineKeyboardButton($text="Анекдот","","Callback_say_SayJokes1",""); 
@@ -246,7 +240,7 @@ $par['CODE'] = $code1;
 SQLInsert('tlg_event', $par);						
 	 
 	 
-//}	
+}	
 
 }
  }
