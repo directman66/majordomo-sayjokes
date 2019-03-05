@@ -167,6 +167,11 @@ if ($ctype==18) {	$pretext = array("Слушай Статусы +18");}
 * @access public
 */
 function usual(&$out) {
+
+ if ($this->owner->action=='apps') {
+  $this->redirect(ROOTHTML."module/".$this->name.".html");
+//  $this->redirect(ROOTHTML."module/nick7zmail.html");
+ } else 
  $this->admin($out);
 }
 /**
